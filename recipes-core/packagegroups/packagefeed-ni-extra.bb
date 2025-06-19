@@ -329,6 +329,7 @@ RDEPENDS:${PN} += "\
 	tcsh \
 	tipcutils \
 	tmux \
+	usbguard \
 	zram \
 "
 
