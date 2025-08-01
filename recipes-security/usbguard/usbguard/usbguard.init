@@ -19,6 +19,12 @@ DESC="Usbguard daemon"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 CONFIG_FILE=/etc/usbguard/usbguard-daemon.conf
+LOG_DIR=/var/log/usbguard
+
+# Ensure log directory exists
+if [ ! -d "$LOG_DIR" ]; then
+    mkdir -p "$LOG_DIR"
+fi
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
