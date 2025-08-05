@@ -16,7 +16,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 NAME=usbguard
 DAEMON=/usr/sbin/usbguard-daemon
 DESC="Usbguard daemon"
-PIDFILE=/var/run/$NAME.pid
+PIDFILE=/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 CONFIG_FILE=/etc/usbguard/usbguard-daemon.conf
 LOG_DIR=/var/log/usbguard
@@ -129,7 +129,7 @@ usbguard_daemon_start()
         exit 1
     fi
 
-    start-stop-daemon --start --exec $DAEMON -- -f -s -c $CONFIG_FILE
+    start-stop-daemon --start --pidfile $PIDFILE --make-pidfile --background --exec $DAEMON -- -f -s -c $CONFIG_FILE
 }
 
 usbguard_daemon_stop()
@@ -141,10 +141,10 @@ usbguard_daemon_stop()
 }
 
 usbguard_daemon_status() {
-	if [ ! -e $PIDFILE ]; then
-		status $DAEMON
-	else
+	if [ -f $PIDFILE ]; then
 		status -p $PIDFILE $DAEMON
+	else
+		status $DAEMON
 	fi
 }
 
